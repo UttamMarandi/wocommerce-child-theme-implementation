@@ -30,7 +30,7 @@ get_header( 'shop' );
 
 ?>
 <header class="woocommerce-products-header">
-   <div class="shop-banner-ut" style= "background-image:url(<?php echo get_template_directory_uri();?>/sunfish-shop.jpg);">
+   <div class="shop-banner-ut" style= "background-image:url(<?php echo get_template_directory_uri();?>/shop-top-banner.jpg);">
         <h1 class="shop-header">
             Shop
         </h1>
