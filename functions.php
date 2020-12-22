@@ -35,4 +35,40 @@ add_filter( 'woocommerce_output_related_products_args', 'jk_related_products_arg
 	return $args;
 }
 
+// Checkout redirect
+add_filter( 'woocommerce_add_to_cart_redirect', 'skip_woo_cart' );
+ 
+function skip_woo_cart() {
+   return wc_get_checkout_url();
+}
 
+//Change add to cart text in product page
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'woocommerce_custom_single_add_to_cart_text' ); 
+function woocommerce_custom_single_add_to_cart_text() {
+    return __( 'Buy Now', 'woocommerce' ); 
+}
+
+//Add to cart redirect to product page
+function my_custom_add_to_cart_redirect( $url ) {
+if ( ! isset( $_REQUEST[‘add-to-cart’] ) || ! is_numeric( $_REQUEST[‘add-to-cart’] ) ) {
+return $url;
+}
+$product_id = apply_filters( ‘woocommerce_add_to_cart_product_id’, absint( $_REQUEST[‘add-to-cart’] ) );
+// Only redirect products with the ‘small-item’ shipping class
+$url = get_permalink( $product_id );
+return $url;
+}
+add_filter( ‘woocommerce_add_to_cart_redirect’, ‘my_custom_add_to_cart_redirect’ );
+
+//Add to redirect to product page
+
+
+add_filter( 'woocommerce_loop_add_to_cart_link', 'ts_replace_add_to_cart_button', 10, 2 );
+function ts_replace_add_to_cart_button( $button, $product ) {
+if (is_product_category() || is_shop()) {
+$button_text = __("View Product", "woocommerce");
+$button_link = $product->get_permalink();
+$button = '<a href="' . $button_link . '">' . $button_text . '</a>';
+return $button;
+}
+}
