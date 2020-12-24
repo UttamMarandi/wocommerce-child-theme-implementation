@@ -72,3 +72,9 @@ $button = '<a href="' . $button_link . '">' . $button_text . '</a>';
 return $button;
 }
 }
+add_action( 'woocommerce_before_cart', function(){
+    echo '<div class="cart-loop-ut">';
+}, 9 );
+add_action( 'woocommerce_after_cart', function(){
+    echo '</div>';
+}, 11 );
